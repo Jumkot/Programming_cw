@@ -11,11 +11,11 @@ int main(int argc, char* argv[])
     }
     check_correct_file(file);
 
+    int num = 0;
+    int line = 0;
+    wchar_t ch;
     wchar_t** start = malloc(MAX_SIZE * sizeof(wchar_t*));
     start = prepare_two_dim_arr(start);
-    wchar_t ch;
-    int line = 0;
-    int num = 0;
     while ((ch = getwc(file)) != WEOF) {
         if (ch == L'.' || ch == L'?' || ch == L'!') {
             start[line][num] = L'\0';
@@ -27,15 +27,8 @@ int main(int argc, char* argv[])
         }
     }
     fclose(file);
-
-    for (int i = 0; i < line; i++) {
-        if (start[i][0] == L' ') {
-            for (int j = 0; start[i][j] != L'\0'; j++) {
-                start[i][j] = start[i][j + 1];
-            }
-        }
-        skip_n(start[i], wcslen(start[i]));
-    }
+    
+    skip_empty(start, &line);
 
     wchar_t** processing = malloc(MAX_SIZE * sizeof(wchar_t*));
     processing = prepare_two_dim_arr(processing);
@@ -46,11 +39,11 @@ int main(int argc, char* argv[])
         skip_trash(processing[i], wcslen(processing[i]));
     }
 
-    int* result = malloc(MAX_SIZE * sizeof(int));
+    int* result = calloc(MAX_SIZE, sizeof(int));
     int step = 0;
     for (int i = 0; i < line; i++) {
         num = wcslen(processing[i]);
-        if (!(pal(processing[i], num))) {
+        if (pal(processing[i], num) == 0) {
             result[step] = i;
             step++;
         }
@@ -72,7 +65,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < line; i++) {
         free(processing[i]);
     }
-    free(processing);
+    free(processing);    
     free(result);
 
     return 0;

@@ -49,6 +49,13 @@ wchar_t** prepare_two_dim_arr(wchar_t** arr)
     return arr;
 }
 
+void print_two_dim_arr(wchar_t** arr, int line)
+{
+    for (int i = 0; i < line; i++) {
+        wprintf(L"%ls\n", arr[i]);
+    }
+}
+
 void skip_trash(wchar_t* arr, int num)
 {
     int j = 0;
@@ -56,7 +63,7 @@ void skip_trash(wchar_t* arr, int num)
         if (arr[i] == L'\0') {
             break;
         }
-        if (iswalpha(arr[i])) {
+        if (check_correct_letter(arr[i])) {
             arr[j] = towlower(arr[i]);
             j++;
         }
@@ -75,17 +82,37 @@ void skip_n(wchar_t* arr, int num)
             arr[j] = arr[i];
             j++;
         }
-    }
+    } 
     arr[j] = L'\0';
+}
+
+void skip_empty(wchar_t** arr, int* line)
+{
+    int i = 0;
+    while (i < *line) {
+        if (arr[i][0] == L' ') {
+            for (int j = 0; arr[i][j] != L'\0'; j++) {
+                arr[i][j] = arr[i][j + 1];
+            }
+        }
+        int num = wcslen(arr[i]);
+        skip_n(arr[i], num);
+        if (num == 0) {
+            for (int k = i; k < *line - 1; k++) {
+                arr[k] = arr[k + 1];
+            }
+            (*line)--;
+        } else {
+            i++;
+        }
+    }
+    // wprintf(L"\n");
 }
 
 int pal(wchar_t* arr, int num)
 {
-    if (!num) {
-        return -1;
-    }
-    for (int i = 0; i < (num / 2); i++) {
-        if (arr[i] != arr[num - i - 1]) {
+    for (int i = 0; i < (num/2); i++){
+        if (arr[i] != arr[num - i - 1]){
             return -1;
         }
     }
