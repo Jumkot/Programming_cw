@@ -9,8 +9,6 @@ void check_correct_file(FILE* file)
 {
     wchar_t ch;
 
-    fseek(file, 0, SEEK_SET);
-
     while ((ch = fgetwc(file)) != WEOF) {
         if (!(iswspace(ch) || iswpunct(ch) || check_correct_letter(ch))) {
             wprintf(L"Данные внутри предложенного файла неккоректны.\n");
