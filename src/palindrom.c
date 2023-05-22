@@ -7,7 +7,22 @@ int check_correct_letter(wchar_t c)
 
 void check_correct_file(FILE* file)
 {
+    int flag = 0;
     wchar_t ch;
+
+    while ((ch = fgetwc(file)) != WEOF) {
+        if (check_correct_letter(ch)) {
+            flag = 1;
+            break;
+        }
+    }
+
+    if (!flag) {
+        wprintf(L"Данные внутри предложенного файла неккоректны.\n");
+        exit(-1);
+    }
+
+    fseek(file, 0, SEEK_SET);
 
     while ((ch = fgetwc(file)) != WEOF) {
         if (!(iswspace(ch) || iswpunct(ch) || check_correct_letter(ch))) {
