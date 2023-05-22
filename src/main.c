@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
         }
     }
     fclose(file);
-    
+
     skip_empty(start, &line);
 
     wchar_t** processing = malloc(MAX_SIZE * sizeof(wchar_t*));
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < line; i++) {
         free(processing[i]);
     }
-    free(processing);    
+    free(processing);
     free(result);
 
     return 0;

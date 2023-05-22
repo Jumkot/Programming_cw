@@ -82,7 +82,7 @@ void skip_n(wchar_t* arr, int num)
             arr[j] = arr[i];
             j++;
         }
-    } 
+    }
     arr[j] = L'\0';
 }
 
@@ -106,13 +106,12 @@ void skip_empty(wchar_t** arr, int* line)
             i++;
         }
     }
-    // wprintf(L"\n");
 }
 
 int pal(wchar_t* arr, int num)
 {
-    for (int i = 0; i < (num/2); i++){
-        if (arr[i] != arr[num - i - 1]){
+    for (int i = 0; i < (num / 2); i++) {
+        if (arr[i] != arr[num - i - 1]) {
             return -1;
         }
     }
