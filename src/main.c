@@ -13,19 +13,20 @@ int main(int argc, char* argv[])
 
     int num = 0;
     int line = 0;
-    wchar_t ch;
+    // wchar_t ch;
     wchar_t** start = malloc(MAX_SIZE * sizeof(wchar_t*));
     start = prepare_two_dim_arr(start);
-    while ((ch = getwc(file)) != WEOF) {
-        if (ch == L'.' || ch == L'?' || ch == L'!') {
-            start[line][num] = L'\0';
-            num = 0;
-            line++;
-        } else {
-            start[line][num] = ch;
-            num++;
-        }
-    }
+    read_text(file, start, &line, &num);
+    // while ((ch = getwc(file)) != WEOF) {
+    //     if (ch == L'.' || ch == L'?' || ch == L'!') {
+    //         start[line][num] = L'\0';
+    //         num = 0;
+    //         line++;
+    //     } else {
+    //         start[line][num] = ch;
+    //         num++;
+    //     }
+    // }
     fclose(file);
 
     skip_empty(start, &line);

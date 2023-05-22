@@ -49,10 +49,18 @@ wchar_t** prepare_two_dim_arr(wchar_t** arr)
     return arr;
 }
 
-void print_two_dim_arr(wchar_t** arr, int line)
+void read_text(FILE* file, wchar_t** start, int* line, int* num)
 {
-    for (int i = 0; i < line; i++) {
-        wprintf(L"%ls\n", arr[i]);
+    wchar_t ch;
+    while ((ch = getwc(file)) != WEOF) {
+        if (ch == L'.' || ch == L'?' || ch == L'!') {
+            start[*line][*num] = L'\0';
+            *num = 0;
+            (*line)++;
+        } else {
+            start[*line][*num] = ch;
+            (*num)++;
+        }
     }
 }
 
